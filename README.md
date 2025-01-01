@@ -4,6 +4,8 @@ This game is a study case for the game Overcooked! 2. It is intended for referen
 
 All art assets like Textures, models, audio clips etc where created by the indie game maker Code Monkey for this [Free Complete Unity Course](https://www.youtube.com/watch?v=AmGSEH7QcDg).
 
+[Game Demo]()
+
 ## How to Play
 You must prepare, cook and serve up some tasty orders before time ends!
 
@@ -18,4 +20,4 @@ Your score will increase according in how quickly you deliver those orders.
 - E - Interact with Plate and Ingredients (Tomato, Cheese, Bread etc)
 
 ## Release version on Web
-Comming soon...
+The last WebGL build: Comming soon...
