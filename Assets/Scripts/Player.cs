@@ -7,6 +7,13 @@ using UnityEngine;
 public class Player : NetworkBehaviour, IKitchenObjectParent
 {
     //public static Player Instance { get; private set; }
+    public static Player LocalInstance { get; private set; }
+    public static event EventHandler OnPlayerSpawned;
+    public static event EventHandler OnAnyPickedSomething;
+    public static void ResetStaticData()
+    {
+        OnPlayerSpawned = null;
+    }
 
     public event EventHandler OnPickedSomething;
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
@@ -36,6 +43,17 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
         GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+        {
+            LocalInstance = this;
+        }
+
+        OnPlayerSpawned?.Invoke(this, EventArgs.Empty);
+        OnAnyPickedSomething?.Invoke(this, EventArgs.Empty);
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
