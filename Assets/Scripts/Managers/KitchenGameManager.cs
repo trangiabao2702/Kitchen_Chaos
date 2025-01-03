@@ -138,9 +138,4 @@ public class KitchenGameManager : MonoBehaviour
             OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         }
     }
-
-    public void GetCurrentState()
-    {
-        Debug.Log(state);
-    }
 }

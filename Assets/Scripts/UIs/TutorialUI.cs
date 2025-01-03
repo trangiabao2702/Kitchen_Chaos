@@ -34,7 +34,6 @@ public class TutorialUI : MonoBehaviour
 
     private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        KitchenGameManager.Instance.GetCurrentState();
         if (KitchenGameManager.Instance.IsCountdownToStartActive())
         {
             Hide();
