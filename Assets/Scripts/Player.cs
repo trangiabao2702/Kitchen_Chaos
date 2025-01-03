@@ -29,10 +29,6 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
     private void Awake()
     {
-        //if (Instance != null)
-        //{
-        //    Debug.LogError("There is more than one Player Instance");
-        //}
         //Instance = this;
     }
 

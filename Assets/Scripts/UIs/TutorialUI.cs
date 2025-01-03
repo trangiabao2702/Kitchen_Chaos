@@ -23,6 +23,8 @@ public class TutorialUI : MonoBehaviour
         KitchenGameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
 
         UpdateVisual();
+
+        Show();
     }
 
     private void GameInput_OnBindingRebind(object sender, System.EventArgs e)
@@ -32,6 +34,7 @@ public class TutorialUI : MonoBehaviour
 
     private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e)
     {
+        KitchenGameManager.Instance.GetCurrentState();
         if (KitchenGameManager.Instance.IsCountdownToStartActive())
         {
             Hide();
