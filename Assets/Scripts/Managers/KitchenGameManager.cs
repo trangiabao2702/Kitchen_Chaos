@@ -35,7 +35,7 @@ public class KitchenGameManager : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnPause += GameInput_OnPause;
+        GameInput.Instance.OnPauseAction += GameInput_OnPause;
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
 
         // DEBUG TRIGGER GAME START AUTOMATICALLY

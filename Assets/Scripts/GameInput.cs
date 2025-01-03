@@ -19,7 +19,8 @@ public class GameInput : MonoBehaviour
 
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
-    public event EventHandler OnPause;
+    public event EventHandler OnPauseAction;
+    public event EventHandler OnBindingRebind;
 
     public static GameInput Instance {  get; private set; }
 
@@ -66,7 +67,7 @@ public class GameInput : MonoBehaviour
 
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnPause?.Invoke(this, EventArgs.Empty);
+        OnPauseAction?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector2 GetMovementVectorNormalized()
@@ -147,6 +148,8 @@ public class GameInput : MonoBehaviour
 
                 PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
                 PlayerPrefs.Save();
+
+                OnBindingRebind?.Invoke(this, EventArgs.Empty);
             })
             .Start();
     }
