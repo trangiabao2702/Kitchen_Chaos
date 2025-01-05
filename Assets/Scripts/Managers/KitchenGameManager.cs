@@ -33,6 +33,7 @@ public class KitchenGameManager : NetworkBehaviour
     private bool isLocalPlayerReady = false;
     private Dictionary<ulong, bool> playerReadyDictionary;
     private Dictionary<ulong, bool> playerPausedDictionary;
+    private bool autoCheckGamePauseState;
 
     private void Awake()
     {
@@ -52,6 +53,16 @@ public class KitchenGameManager : NetworkBehaviour
     {
         state.OnValueChanged += State_OnValueChanged;
         isGamePaused.OnValueChanged += IsGamePaused_OnValueChanged;
+
+        if (IsServer)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+        }
+    }
+
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
+    {
+        autoCheckGamePauseState = true;
     }
 
     private void State_OnValueChanged(State previousValue, State newValue)
@@ -153,6 +164,15 @@ public class KitchenGameManager : NetworkBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (autoCheckGamePauseState)
+        {
+            autoCheckGamePauseState = false;
+            CheckGamePausedState();
+        }
+    }
+
     public bool IsCountdownToStartActive()
     {
         return state.Value == State.CountdownToStart;
@@ -200,7 +220,7 @@ public class KitchenGameManager : NetworkBehaviour
     {
         playerPausedDictionary[serverRpcParams.Receive.SenderClientId] = true;
 
-        TestGamePausedState();
+        CheckGamePausedState();
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -208,10 +228,10 @@ public class KitchenGameManager : NetworkBehaviour
     {
         playerPausedDictionary[serverRpcParams.Receive.SenderClientId] = false;
 
-        TestGamePausedState();
+        CheckGamePausedState();
     }
 
-    private void TestGamePausedState()
+    private void CheckGamePausedState()
     {
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
