@@ -25,8 +25,9 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     [SerializeField] private float moveSpeed = 5f;
     //[SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private LayerMask collisionsLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
-
+    [SerializeField] private List<Vector3> spawnPositionList;
 
     private bool isWalking = false;
     private Vector3 lastInteractDir = new Vector3 (0, 0, 0);
@@ -51,6 +52,8 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
         {
             LocalInstance = this;
         }
+
+        transform.position = spawnPositionList[(int)OwnerClientId];
 
         OnPlayerSpawned?.Invoke(this, EventArgs.Empty);
         OnAnyPickedSomething?.Invoke(this, EventArgs.Empty);
@@ -98,10 +101,9 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-        float playerSize = .7f;
-        float playerHeight = 2f;
+        float playerRadius = .7f;
         float moveDistance = moveSpeed * Time.deltaTime;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDir, moveDistance);
+        bool canMove = !Physics.BoxCast(transform.position, Vector3.one * playerRadius, moveDir, Quaternion.identity, moveDistance, collisionsLayerMask);
 
         if (!canMove)
         {
@@ -109,7 +111,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
             // Attempt only X movement
             Vector3 moveDirX = new Vector3(moveDir.x, 0f, 0f).normalized;
-            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDirX, moveDistance);
+            canMove = moveDir.x != 0 && !Physics.BoxCast(transform.position, Vector3.one * playerRadius, moveDirX, Quaternion.identity, moveDistance, collisionsLayerMask);
 
             if (canMove)
             {
@@ -122,7 +124,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
                 // Attempt only Z movement
                 Vector3 moveDirZ = new Vector3(0f, 0f, moveDir.z).normalized;
-                canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDirZ, moveDistance);
+                canMove = moveDir.z != 0 && !Physics.BoxCast(transform.position, Vector3.one * playerRadius, moveDirZ, Quaternion.identity, moveDistance, collisionsLayerMask);
 
                 if (canMove)
                 {
