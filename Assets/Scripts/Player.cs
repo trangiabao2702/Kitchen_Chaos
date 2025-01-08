@@ -57,7 +57,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
             LocalInstance = this;
         }
 
-        transform.position = spawnPositionList[(int)OwnerClientId];
+        transform.position = spawnPositionList[KitchenGameMultiplayer.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)];
 
         OnPlayerSpawned?.Invoke(this, EventArgs.Empty);
         OnAnyPickedSomething?.Invoke(this, EventArgs.Empty);
