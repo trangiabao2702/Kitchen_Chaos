@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class KitchenGameMultiplayer : NetworkBehaviour
 {
+    public const int MAX_PLAYER_AMOUNT = 4;
+
     public static KitchenGameMultiplayer Instance { get; private set; }
 
     public event EventHandler OnTryingToJoinGame;
     public event EventHandler OnFailedToJoinGame;
     public event EventHandler OnPlayerDataNetworkListChanged;
-
-    private const int MAX_PLAYER_AMOUNT = 4;
 
     [SerializeField] private KitchenObjectListSO kitchenObjectListSO;
     [SerializeField] private List<Color> playerColorList;
