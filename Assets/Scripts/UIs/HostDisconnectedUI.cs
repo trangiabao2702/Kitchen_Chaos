@@ -29,6 +29,8 @@ public class HostDisconnectedUI : MonoBehaviour
         {
             // Host shut down
             Show();
+
+            KitchenGameLobby.Instance.DeleteLobby();
         }
     }
 

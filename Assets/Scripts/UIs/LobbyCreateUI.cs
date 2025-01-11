@@ -15,11 +15,11 @@ public class LobbyCreateUI : MonoBehaviour
     {
         createPrivateButton.onClick.AddListener(() =>
         {
-            KitchenGameLobby.Instance.CreateLobby(lobbyNameInputField.name, false);
+            KitchenGameLobby.Instance.CreateLobby(lobbyNameInputField.text, false);
         });
         createPublicButton.onClick.AddListener(() =>
         {
-            KitchenGameLobby.Instance.CreateLobby(lobbyNameInputField.name, true);
+            KitchenGameLobby.Instance.CreateLobby(lobbyNameInputField.text, true);
         });
         closeButton.onClick.AddListener(() =>
         {

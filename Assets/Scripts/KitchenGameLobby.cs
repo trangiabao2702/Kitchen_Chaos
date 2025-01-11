@@ -89,13 +89,13 @@ public class KitchenGameLobby : MonoBehaviour
         return joinedLobby != null && joinedLobby.HostId == AuthenticationService.Instance.PlayerId;
     }
 
-    public async void CreateLobby(string lobbyGame, bool isPrivate)
+    public async void CreateLobby(string lobbyName, bool isPrivate)
     {
         OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
 
         try
         {
-            joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyGame, KitchenGameMultiplayer.MAX_PLAYER_AMOUNT, new CreateLobbyOptions
+            joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, KitchenGameMultiplayer.MAX_PLAYER_AMOUNT, new CreateLobbyOptions
             {
                 IsPrivate = isPrivate
             });
