@@ -14,6 +14,7 @@ After the initial count down, Orders will be received on the screen's top left c
 Your score will increase according in how quickly you deliver those orders.
 
 ## Controls
+![](./Assets/_Assets/Textures/Tutorial.png)
 - Tab - Switch between Chefs.
 - AWSD or Arrow Keys - Movement.
 - Q - Interact with Items (Cutting Table, Stove Table)
